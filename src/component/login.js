@@ -6,7 +6,7 @@ export const Login = ({ setCinema, setLogged }) => {
   const username = useRef("");
   const password = useRef("");
 
-  const URL="https://webtracing.herokuapp.com/"
+  const URL="https://webtracing.herokuapp.com"
 
   const navigate = useNavigate();
 
