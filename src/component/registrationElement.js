@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function registrationElement({ registration, reg, setRegistrer }) {
   const [select, setSelect] = useState("");
-  const URL="http://localhost:3001/tracing"
+  const URL="https://webtracing.herokuapp.com/tracing/"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +32,7 @@ function registrationElement({ registration, reg, setRegistrer }) {
         )
         .catch((e) => alert(e.response.data));
     } catch (error) {
-      alert("error axios tracing", error);
+      alert("errore axios eliminazione elemento in registration Element", error);
     }
   };
 

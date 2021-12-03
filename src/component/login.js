@@ -6,7 +6,7 @@ export const Login = ({ setCinema, setLogged }) => {
   const username = useRef("");
   const password = useRef("");
 
-  const URL="https://webtracing.herokuapp.com"
+  const URL="https://webtracing.herokuapp.com/"
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export const Login = ({ setCinema, setLogged }) => {
           return navigate("/tracing");
         })
         .catch((e) => {
-          alert(e.response.data);
+          alert("axios del login\n"+e.response.data);
           username.current.focus();
           username.current.value = "";
           password.current.value = "";
