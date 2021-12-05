@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,15 +6,13 @@ export const Login = ({ setCinema, setLogged }) => {
   const username = useRef("");
   const password = useRef("");
 
-  const URL="https://webtracing.herokuapp.com/"
+  const URL = "https://webtracing.herokuapp.com/";
 
   const navigate = useNavigate();
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    const user = username.current.value;
-    const pass = password.current.value;
     /* console.log("login value nel submit", user, pass); */
 
     if (!username || !password) {
@@ -25,22 +23,22 @@ export const Login = ({ setCinema, setLogged }) => {
     /* console.log("sono nel submit"); */
 
     try {
-      const result = await Axios.post(URL, {
+      await Axios.post(URL, {
         username: username.current.value,
-        password: password.current.value,
+        password: password.current.value
       })
         .then((res) => {
           /* console.log("login respone",res.data); */
           setCinema(res.data);
-          setLogged(true)
+          setLogged(true);
           return navigate("/tracing");
         })
         .catch((e) => {
-          alert("axios del login\n"+e.response.data);
+          alert("axios del login\n" + e.response.data);
           username.current.focus();
           username.current.value = "";
           password.current.value = "";
-          return
+          return;
         });
     } catch (error) {
       alert(error);
