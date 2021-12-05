@@ -4,6 +4,7 @@ import Table from "./table";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import ModalPhoto from "./modalPhoto";
 
 export const Tracing = ({ cinema }) => {
   const URL = "https://webtracing.herokuapp.com/tracing";
@@ -138,7 +139,7 @@ export const Tracing = ({ cinema }) => {
           <div className="login-form bg-light mt-4 p-4">
             <form className="row g-3">
               <h4>Tracing</h4>
-              <div className="col">
+              <div className="col-12">
                 <input
                   className="form-control"
                   type="text"
@@ -147,7 +148,7 @@ export const Tracing = ({ cinema }) => {
                   disabled
                 />
               </div>
-              <div className="col-12">
+              <div className="col-10">
                 <input
                   type="text"
                   ref={codFisc}
@@ -158,10 +159,13 @@ export const Tracing = ({ cinema }) => {
                   placeholder="CODICE FISCALE"
                 />
               </div>
+              <div className="col-2">
+                <ModalPhoto origin={"codfiscale"} />
+              </div>
               <div className="col-12">
                 <Accordion num={number} nome={agregato} />
               </div>
-              <div className="col-12">
+              <div className="col-10">
                 <input
                   type="text"
                   name="ticket"
@@ -171,6 +175,9 @@ export const Tracing = ({ cinema }) => {
                   className="form-control"
                   placeholder="TICKET"
                 />
+              </div>
+              <div className="col-2">
+                <ModalPhoto origin={"ticket"} />
               </div>
               <div className="col-12">
                 <input

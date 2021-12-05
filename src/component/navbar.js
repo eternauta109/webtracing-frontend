@@ -1,25 +1,25 @@
-import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
-export const NavBar = ({isLogged}) => {
-
-  const Litracing=()=>{
-    if(isLogged){
-      
-       return <li className="nav-item m-2">
-              <Link to={`/tracing`}>Tracing </Link>
+export const NavBar = ({ isLogged }) => {
+  const Litracing = () => {
+    if (isLogged) {
+      return (
+        <li className="nav-item m-2">
+          <Link to={`/tracing`}>Tracing </Link>
         </li>
-      
-    } else{
-     return <li className="nav-item m-2" >loggati</li>
+      );
+    } else {
+      return <li className="nav-item m-2">loggati</li>;
     }
-
-  }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand">TRACING</a>
+        <a className="navbar-brand" href="/">
+          TRACING
+        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -36,8 +36,7 @@ export const NavBar = ({isLogged}) => {
             <li className="nav-item m-2">
               <Link to={`/login`}>Login</Link>
             </li>
-            <Litracing/>
-            
+            <Litracing />
           </ul>
         </div>
       </div>
