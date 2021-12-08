@@ -160,7 +160,7 @@ export const Tracing = ({ cinema }) => {
                 />
               </div>
               <div className="col-2">
-                <ModalPhoto origin={"codfiscale"} />
+                <ModalPhoto origin={"codfiscale"} setInput={codFisc} />
               </div>
               <div className="col-12">
                 <Accordion num={number} nome={agregato} />
@@ -177,7 +177,7 @@ export const Tracing = ({ cinema }) => {
                 />
               </div>
               <div className="col-2">
-                <ModalPhoto origin={"ticket"} />
+                <ModalPhoto origin={"ticket"} setInput={ticket} />
               </div>
               <div className="col-12">
                 <input

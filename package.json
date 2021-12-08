@@ -4,11 +4,13 @@
   "private": true,
   "dependencies": {
     "axios": "^0.24.0",
-    "quagga": "0.12.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-qr-barcode-scanner": "1.0.6",
     "react-router-dom": "6.0.2",
-    "react-toastify": "^8.1.0"
+    "react-scripts": "4.0.3",
+    "react-toastify": "^8.1.0",
+    "react-webcam-barcode-scanner": "0.0.2-rc2"
   },
   "scripts": {
     "start": "react-scripts start",
