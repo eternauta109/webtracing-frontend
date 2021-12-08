@@ -1,38 +1,38 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-function registrationElement({ registration, reg, setRegistrer }) {
+function RegistrationElement({ registration, reg, setRegistrer }) {
   const [select, setSelect] = useState("");
-  const URL="https://webtracing.herokuapp.com/tracing/"
+  const URL = "https://webtracing.herokuapp.com/tracing/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     /* console.log("registartion", registration); */
     try {
-      const deleteItem = await axios
+      await axios
         .delete(URL, {
-          data: { codTicket: select },
+          data: { codTicket: select }
         })
         .then(
-          toast.success(
-            'eliminazione dal db avvenuta',
-            {
-              position: 'bottom-right',
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            }
-          )
+          toast.success("eliminazione dal db avvenuta", {
+            position: "bottom-right",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+          })
         )
         .catch((e) => alert(e.response.data));
     } catch (error) {
-      alert("errore axios eliminazione elemento in registration Element", error);
+      alert(
+        "errore axios eliminazione elemento in registration Element",
+        error
+      );
     }
   };
 
@@ -53,7 +53,6 @@ function registrationElement({ registration, reg, setRegistrer }) {
     </span>
   );
   /* "text-muted" */
-
 
   return (
     <div>
@@ -91,4 +90,4 @@ function registrationElement({ registration, reg, setRegistrer }) {
   );
 }
 
-export default registrationElement;
+export default RegistrationElement;
