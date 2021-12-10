@@ -6,12 +6,13 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import ModalPhoto from "./modalPhoto";
 
-export const Tracing = ({ cinema }) => {
+export const Tracing = ({ cinema, totScreen }) => {
   const URL = "https://webtracing.herokuapp.com/tracing";
   /* const [codFisc, setCodFisc] = useState(''); */
   const codFisc = useRef("");
   const ticket = useRef();
   const buttonSubmit = useRef("");
+  const [screen, setScreen] = useState();
 
   /* const date = new Date().toLocaleString() + ''; */
   const agregato = useRef("");
@@ -162,9 +163,7 @@ export const Tracing = ({ cinema }) => {
               <div className="col-2">
                 <ModalPhoto origin={"codfiscale"} setInput={codFisc} />
               </div>
-              <div className="col-12">
-                <Accordion num={number} nome={agregato} />
-              </div>
+
               <div className="col-10">
                 <input
                   type="text"
@@ -179,6 +178,10 @@ export const Tracing = ({ cinema }) => {
               <div className="col-2">
                 <ModalPhoto origin={"ticket"} setInput={ticket} />
               </div>
+              <div className="col-12">
+                <Accordion num={number} nome={agregato} screen={totScreen} />
+              </div>
+
               <div className="col-12">
                 <input
                   name="date"
