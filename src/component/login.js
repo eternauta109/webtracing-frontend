@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export const Login = ({ setCinema, setLogged }) => {
+export const Login = ({ setCinema, setLogged, setTotScreen }) => {
   const username = useRef("");
   const password = useRef("");
 
@@ -13,7 +13,7 @@ export const Login = ({ setCinema, setLogged }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    /* console.log("login value nel submit", user, pass); */
+    console.log("login value nel submit");
 
     if (!username || !password) {
       alert("campi vuoti");
@@ -28,13 +28,14 @@ export const Login = ({ setCinema, setLogged }) => {
         password: password.current.value
       })
         .then((res) => {
-          /* console.log("login respone",res.data); */
-          setCinema(res.data);
+          console.log("login respone", res.data);
+          setCinema(res.data.cinema);
+          setTotScreen(res.data.screen);
           setLogged(true);
           return navigate("/tracing");
         })
         .catch((e) => {
-          alert("axios del login\n" + e.response.data);
+          alert("axios del login\n" + e);
           username.current.focus();
           username.current.value = "";
           password.current.value = "";
