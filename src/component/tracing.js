@@ -133,7 +133,7 @@ export const Tracing = ({ cinema, totScreen }) => {
     }
     azzeraTutto();
 
-    codFisc.current.focus();
+    /* codFisc.current.focus(); */
   };
 
   const handleKeyPressed = (e) => {
