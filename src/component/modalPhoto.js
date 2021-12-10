@@ -1,3 +1,4 @@
+import React  from 'react';
 import { useState } from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
@@ -7,6 +8,7 @@ const ModalPhoto = ({ origin, setInput }) => {
 
   /* console.log("show", show); */
 
+  
   const onUpdateScreen = (err, result) => {
     if (result) {
       setInput.current.value = result;

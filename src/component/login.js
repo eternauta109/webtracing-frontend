@@ -13,7 +13,7 @@ export const Login = ({ setCinema, setLogged, setTotScreen }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("login value nel submit");
+    /* console.log("login value nel submit"); */
 
     if (!username || !password) {
       alert("campi vuoti");
@@ -28,7 +28,7 @@ export const Login = ({ setCinema, setLogged, setTotScreen }) => {
         password: password.current.value
       })
         .then((res) => {
-          console.log("login respone", res.data);
+          /* console.log("login respone", res.data); */
           setCinema(res.data.cinema);
           setTotScreen(res.data.screen);
           setLogged(true);
