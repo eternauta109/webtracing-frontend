@@ -13,12 +13,19 @@ export const Tracing = ({ cinema, totScreen }) => {
   const ticket = useRef();
   const buttonSubmit = useRef("");
   const [screen, setScreen] = useState();
-
+  const [time, setTime] = useState();
   /* const date = new Date().toLocaleString() + ''; */
   const agregato = useRef("");
   const number = useRef("");
   const [counter, setCounter] = useState(0);
   const [registrer, setRegistrer] = useState([]);
+
+  function azzeraTutto() {
+    codFisc.current.value = "";
+    agregato.current.value = "";
+    number.current.value = "";
+    ticket.current.value = "";
+  }
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -48,16 +55,24 @@ export const Tracing = ({ cinema, totScreen }) => {
       return;
     }
     if (!ticket.current.value) {
-      toast.error("si deve inserire il codice biglietto", {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined
-      });
-      return;
+      if (agregato.current.value && number.current.value) {
+        ticket.current.value =
+          agregato.current.value + " " + number.current.value;
+      } else {
+        toast.error(
+          "si deve inserire il codice biglietto o sala,ingresso e dati cliente",
+          {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined
+          }
+        );
+        return;
+      }
     }
 
     try {
@@ -68,6 +83,8 @@ export const Tracing = ({ cinema, totScreen }) => {
             fiscale: codFisc.current.value,
             nameClient: agregato.current.value,
             numberPhone: number.current.value,
+            screen,
+            time,
             ticket: ticket.current.value,
             date: new Date().toLocaleString() + ""
           }
@@ -99,9 +116,11 @@ export const Tracing = ({ cinema, totScreen }) => {
     let newArrya = [...registrer];
     newArrya[counter] = {
       fiscale: codFisc.current.value,
+      ticket: ticket.current.value,
       nameClient: agregato.current.value,
       numberPhone: number.current.value,
-      ticket: ticket.current.value,
+      screen: screen,
+      time,
       count: counter,
       date: new Date().toLocaleString() + "",
       onDb: true
@@ -112,10 +131,8 @@ export const Tracing = ({ cinema, totScreen }) => {
     if (counter === 2) {
       setCounter(0);
     }
-    codFisc.current.value = "";
-    agregato.current.value = "";
-    number.current.value = "";
-    ticket.current.value = "";
+    azzeraTutto();
+
     codFisc.current.focus();
   };
 
@@ -179,7 +196,13 @@ export const Tracing = ({ cinema, totScreen }) => {
                 <ModalPhoto origin={"ticket"} setInput={ticket} />
               </div>
               <div className="col-12">
-                <Accordion num={number} nome={agregato} screen={totScreen} />
+                <Accordion
+                  setScreen={setScreen}
+                  setTime={setTime}
+                  num={number}
+                  nome={agregato}
+                  totScreen={totScreen}
+                />
               </div>
 
               <div className="col-12">

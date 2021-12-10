@@ -22,7 +22,7 @@ const ModalPhoto = ({ origin, setInput }) => {
       {/* Button trigger modal */}
       <button
         type="button"
-        className="btn btn-secondary"
+        className="btn btn-secondary "
         data-bs-toggle="modal"
         tabIndex={-1}
         onClick={() => setShow(true)}

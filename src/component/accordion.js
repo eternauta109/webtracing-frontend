@@ -1,14 +1,15 @@
 import React from "react";
 import moment from "moment";
 
-export const Accordion = ({ num, nome, screen }) => {
-  const arraySala = Array.from(Array(screen).keys());
+export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
+  /* console.log(totScreen); */
+  const arraySala = Array.from(Array(totScreen).keys());
   moment.locale("it");
 
   const setArrayTime = () => {
     var items = [];
     var currentDate = moment().set({ hour: 10, minute: 30 });
-    new Array(175).fill().map((acc, index) => {
+    const tip = new Array(175).fill().map(function (_acc) {
       items.push(currentDate.format("HH:mm"));
       currentDate = currentDate.add(5, "minutes");
     });
@@ -16,7 +17,7 @@ export const Accordion = ({ num, nome, screen }) => {
     return items;
   };
 
-  console.log(setArrayTime());
+  /* console.log(setArrayTime()); */
 
   return (
     <div className="accordion accordion" id="accordionFlushExample">
@@ -62,7 +63,7 @@ export const Accordion = ({ num, nome, screen }) => {
               </label>
               <select
                 className="form-select mb-1"
-                /* onChange={(e) => setMyValue(e.target.value)} */
+                onChange={(e) => setScreen(e.target.value)}
                 defaultValue="screen"
               >
                 {arraySala.map((e, key) => {
@@ -76,7 +77,7 @@ export const Accordion = ({ num, nome, screen }) => {
               </label>
               <select
                 className="form-select mb-1"
-                /* onChange={(e) => setMyValue(e.target.value)} */
+                onChange={(e) => setTime(e.target.value)}
                 defaultValue="orario"
               >
                 {setArrayTime().map((e, key) => {

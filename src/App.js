@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 export default function App() {
   const [cinema, setCinema] = useState("");
-  const [totScreen, setTotScreen] = useState("");
+  const [totScreen, setTotScreen] = useState(0);
   const [isLogged, setLogged] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ export default function App() {
               path="/"
               element={
                 <Login
-                  setScreen={setTotScreen}
+                  setTotScreen={setTotScreen}
                   setCinema={setCinema}
                   setLogged={setLogged}
                 />
@@ -32,14 +32,14 @@ export default function App() {
               element={
                 <Login
                   setCinema={setCinema}
-                  setScreen={setTotScreen}
+                  setTotScreen={setTotScreen}
                   setLogged={setLogged}
                 />
               }
             />
             <Route
               path="tracing"
-              element={<Tracing cinema={cinema} screen={totScreen} />}
+              element={<Tracing cinema={cinema} totScreen={totScreen} />}
             />
             <Route
               path="*"
