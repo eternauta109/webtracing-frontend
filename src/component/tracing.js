@@ -15,16 +15,16 @@ export const Tracing = ({ cinema, totScreen }) => {
   const [screen, setScreen] = useState();
   const [time, setTime] = useState();
   /* const date = new Date().toLocaleString() + ''; */
-  const agregato = useRef("");
-  const number = useRef("");
+  const agregato = useRef();
+  const number = useRef();
   const [counter, setCounter] = useState(0);
   const [registrer, setRegistrer] = useState([]);
 
   function azzeraTutto() {
-    codFisc.current.value = "";
-    agregato.current.value = "";
-    number.current.value = "";
-    ticket.current.value = "";
+    codFisc.current.value = null;
+    agregato.current.value = null;
+    number.current.value = null;
+    ticket.current.value = null;
   }
 
   const onSubmit = async (event) => {
@@ -35,11 +35,14 @@ export const Tracing = ({ cinema, totScreen }) => {
       return;
     }
 
-    if (
-      !codFisc.current.value &&
-      !agregato.current.value &&
-      !number.current.value
-    ) {
+    if (codFisc.current.value) {
+      agregato.current.value = codFisc.current.value;
+      number.current.value = "0";
+    }
+    console.log(agregato.current.value)
+    console.log(number.current.value)
+
+    if (!agregato.current.value || !number.current.value) {
       toast.error(
         "inserire codice fiscale o nome, cognome e numero di telefono",
         {
@@ -49,18 +52,19 @@ export const Tracing = ({ cinema, totScreen }) => {
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
-          progress: undefined
+          progress: undefined,
         }
       );
       return;
     }
+
     if (!ticket.current.value) {
-      if (agregato.current.value && number.current.value) {
+      if (time && screen) {
         ticket.current.value =
           agregato.current.value + " " + number.current.value;
       } else {
         toast.error(
-          "si deve inserire il codice biglietto o sala,ingresso e dati cliente",
+          "si deve inserire il codice biglietto o sala,ingresso",
           {
             position: "bottom-right",
             autoClose: 5000,
@@ -68,11 +72,14 @@ export const Tracing = ({ cinema, totScreen }) => {
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined
+            progress: undefined,
           }
         );
         return;
       }
+    } else {
+      setScreen("");
+      setTime("");
     }
 
     try {
@@ -86,8 +93,8 @@ export const Tracing = ({ cinema, totScreen }) => {
             screen,
             time,
             ticket: ticket.current.value,
-            date: new Date().toLocaleString() + ""
-          }
+            date: new Date().toLocaleString() + "",
+          },
         })
         .then((res) => {
           if (res.data) {
@@ -98,7 +105,7 @@ export const Tracing = ({ cinema, totScreen }) => {
               closeOnClick: true,
               pauseOnHover: true,
               draggable: true,
-              progress: undefined
+              progress: undefined,
             });
           } else {
             alert("qualcosa è andato storto. Riprova");
@@ -123,7 +130,7 @@ export const Tracing = ({ cinema, totScreen }) => {
       time,
       count: counter,
       date: new Date().toLocaleString() + "",
-      onDb: true
+      onDb: true,
     };
 
     setRegistrer(newArrya);
