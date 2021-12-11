@@ -9,12 +9,12 @@ export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
   const setArrayTime = () => {
     var items = [];
     var currentDate = moment().set({ hour: 10, minute: 30 });
-    const tip = new Array(175).fill().map(function (_acc) {
+    new Array(175).fill().forEach((_acc)=> {
       items.push(currentDate.format("HH:mm"));
       currentDate = currentDate.add(5, "minutes");
     });
 
-    return items;
+    return items;  
   };
 
   /* console.log(setArrayTime()); */

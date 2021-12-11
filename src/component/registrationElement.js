@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 function RegistrationElement({ registration, reg, setRegistrer }) {
   const [select, setSelect] = useState("");
   const URL = "https://webtracing.herokuapp.com/tracing/";
-  console.log("registartion", reg);
+  /* console.log("registartion", reg); */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
