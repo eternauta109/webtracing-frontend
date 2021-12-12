@@ -9,7 +9,7 @@ import ModalPhoto from "./modalPhoto";
 export const Tracing = ({ cinema, totScreen }) => {
   const URL = "https://webtracing.herokuapp.com/tracing";
   /* const [codFisc, setCodFisc] = useState(''); */
-  const codFisc = useRef("");
+  const codFisc = useRef();
   const ticket = useRef();
   const buttonSubmit = useRef("");
   const [screen, setScreen] = useState();
@@ -27,6 +27,18 @@ export const Tracing = ({ cinema, totScreen }) => {
     ticket.current.value = null;
   }
 
+  const errorHandle = (msg) => {
+    return toast.error(msg, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined
+    });
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
 
@@ -35,106 +47,85 @@ export const Tracing = ({ cinema, totScreen }) => {
       return;
     }
 
-    if (codFisc.current.value) {
-      agregato.current.value = codFisc.current.value;
-      number.current.value = "0";
-    }
-    console.log(agregato.current.value)
-    console.log(number.current.value)
+    //form di registrazione
 
-    if (!agregato.current.value || !number.current.value) {
-      toast.error(
-        "inserire codice fiscale o nome, cognome e numero di telefono",
-        {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        }
-      );
-      return;
-    }
+    let regForm = {
+      fiscale: codFisc.current.value,
+      ticket: ticket.current.value,
+      nome: agregato.current.value,
+      phone: number.current.value,
+      screen,
+      time,
 
-    if (!ticket.current.value) {
-      if (time && screen) {
-        ticket.current.value =
-          agregato.current.value + " " + number.current.value;
+      onDb: false,
+      date: new Date().toLocaleString() + ""
+    };
+
+    //controlli
+    if (!regForm.fiscale) {
+      if (!regForm.phone || !regForm.nome) {
+        errorHandle("inserisci cod. fiscale, o il nome cognome e num di tel");
+        return;
       } else {
-        toast.error(
-          "si deve inserire il codice biglietto o sala,ingresso",
-          {
+        regForm.fiscale = regForm.nome + " " + regForm.phone;
+      }
+    }
+
+    if (!regForm.ticket) {
+      if (!regForm.screen || !regForm.time) {
+        errorHandle("inserisci codice biglietto o sala e ora");
+        return;
+      }
+    } else {
+      regForm.screen = "";
+      regForm.time = "";
+    }
+
+    await axios
+      .post(URL, {
+        registration: {
+          cinema: cinema,
+          fiscale: regForm.fiscale,
+          nameClient: regForm.name,
+          numberPhone: regForm.phone,
+          screen: regForm.screen,
+          time: regForm.time,
+          ticket: regForm.ticket,
+          date: new Date().toLocaleString() + ""
+        }
+      })
+      .then((res) => {
+        if (res.data) {
+          toast.success("registrazione avvenuta", {
             position: "bottom-right",
-            autoClose: 5000,
+            autoClose: 1000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            progress: undefined,
-          }
-        );
+            progress: undefined
+          });
+        } else {
+          alert("qualcosa è andato storto. Riprova");
+          return;
+        }
+      })
+      .catch((e) => {
+        alert("qualcosa è andato storto. Riprova");
         return;
-      }
-    } else {
-      setScreen("");
-      setTime("");
-    }
-
-    try {
-      await axios
-        .post(URL, {
-          registration: {
-            cinema: cinema,
-            fiscale: codFisc.current.value,
-            nameClient: agregato.current.value,
-            numberPhone: number.current.value,
-            screen,
-            time,
-            ticket: ticket.current.value,
-            date: new Date().toLocaleString() + "",
-          },
-        })
-        .then((res) => {
-          if (res.data) {
-            toast.success("registrazione avvenuta", {
-              position: "bottom-right",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-          } else {
-            alert("qualcosa è andato storto. Riprova");
-          }
-        })
-        .catch((e) => alert(e.response.data));
-    } catch (error) {
-      alert("error axios tracing", error);
-    }
+      });
 
     setCounter(counter + 1);
 
     /* console.log(counter) */
 
     let newArrya = [...registrer];
-    newArrya[counter] = {
-      fiscale: codFisc.current.value,
-      ticket: ticket.current.value,
-      nameClient: agregato.current.value,
-      numberPhone: number.current.value,
-      screen: screen,
-      time,
-      count: counter,
-      date: new Date().toLocaleString() + "",
-      onDb: true,
-    };
+    regForm = { ...regForm, onDb: true, count: counter };
+    console.log("final regform", regForm);
+    newArrya[counter] = regForm;
 
     setRegistrer(newArrya);
-
+    console.log(newArrya);
     if (counter === 2) {
       setCounter(0);
     }

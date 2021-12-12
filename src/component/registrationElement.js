@@ -7,14 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 function RegistrationElement({ registration, reg, setRegistrer }) {
   const [select, setSelect] = useState("");
   const URL = "https://webtracing.herokuapp.com/tracing/";
-  /* console.log("registartion", reg); */
+  console.log("registartion", reg);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       await axios
         .delete(URL, {
-          data: { codTicket: select }
+          data: { elToDelete: select }
         })
         .then(
           toast.success("eliminazione dal db avvenuta", {
@@ -36,10 +37,18 @@ function RegistrationElement({ registration, reg, setRegistrer }) {
     }
   };
 
+  const reference = () => {
+    if (reg.ticket === "") {
+      return reg.fiscale;
+    } else {
+      return reg.ticket;
+    }
+  };
+
   const deleted = !reg.onDb ? (
     <span>
       <span className="fs-6">
-        <del>ticket: {reg.ticket} </del>{" "}
+        <del>ref: {reference()} </del>{" "}
       </span>
       <span>
         {" "}
@@ -48,7 +57,7 @@ function RegistrationElement({ registration, reg, setRegistrer }) {
     </span>
   ) : (
     <span>
-      <span className="fs-6"> ticket: {reg.ticket}</span>
+      <span className="fs-6"> ref: {reference()}</span>
       <span> date: {reg.date}</span>
     </span>
   );
@@ -64,7 +73,7 @@ function RegistrationElement({ registration, reg, setRegistrer }) {
             type="submit"
             className="btn btn-danger btn-sm"
             onClick={() => {
-              setSelect(reg.ticket);
+              setSelect(reg.fiscale);
               let newArray = [...registration];
               /* console.log("counter", select); */
               newArray[reg.count] = { ...reg, onDb: false };
