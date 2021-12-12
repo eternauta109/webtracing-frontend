@@ -9,12 +9,12 @@ export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
   const setArrayTime = () => {
     var items = [];
     var currentDate = moment().set({ hour: 10, minute: 30 });
-    new Array(175).fill().forEach((_acc)=> {
+    new Array(175).fill().forEach((_acc) => {
       items.push(currentDate.format("HH:mm"));
       currentDate = currentDate.add(5, "minutes");
     });
 
-    return items;  
+    return items;
   };
 
   /* console.log(setArrayTime()); */
@@ -66,6 +66,7 @@ export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
                 onChange={(e) => setScreen(e.target.value)}
                 defaultValue="screen"
               >
+                <option text="muted"></option>
                 {arraySala.map((e, key) => {
                   return <option key={key}>{e + 1}</option>;
                 })}
@@ -80,6 +81,7 @@ export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
                 onChange={(e) => setTime(e.target.value)}
                 defaultValue="orario"
               >
+                <option text="muted"></option>
                 {setArrayTime().map((e, key) => {
                   return <option key={key}>{e}</option>;
                 })}
