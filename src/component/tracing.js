@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import ModalPhoto from "./modalPhoto";
+import moment from "moment";
 
 export const Tracing = ({ cinema, totScreen }) => {
   const URL = "https://webtracing.herokuapp.com/tracing";
@@ -14,6 +15,8 @@ export const Tracing = ({ cinema, totScreen }) => {
   const buttonSubmit = useRef("");
   const [screen, setScreen] = useState();
   const [time, setTime] = useState();
+  const [anotherDay, SetAnotherDay] = useState(false);
+  const [datashow, setDataShow] = useState("");
   /* const date = new Date().toLocaleString() + ''; */
   const agregato = useRef();
   const number = useRef();
@@ -25,6 +28,8 @@ export const Tracing = ({ cinema, totScreen }) => {
     agregato.current.value = null;
     number.current.value = null;
     ticket.current.value = null;
+
+    SetAnotherDay(false);
   }
 
   const errorHandle = (msg) => {
@@ -42,6 +47,7 @@ export const Tracing = ({ cinema, totScreen }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
+    /* console.log(datashow); */
     if (!cinema) {
       alert("fai prima il login grazie");
       return;
@@ -54,12 +60,14 @@ export const Tracing = ({ cinema, totScreen }) => {
       ticket: ticket.current.value,
       nome: agregato.current.value,
       phone: number.current.value,
+
       screen,
       time,
 
       onDb: false,
-      date: new Date().toLocaleString() + ""
+      date: anotherDay ? datashow : moment().format("YYYY-MM-DD")
     };
+    /* console.log(regForm); */
 
     //controlli
     if (!regForm.fiscale) {
@@ -81,6 +89,8 @@ export const Tracing = ({ cinema, totScreen }) => {
       regForm.time = "";
     }
 
+    //chiamata all'api
+
     await axios
       .post(URL, {
         registration: {
@@ -91,7 +101,7 @@ export const Tracing = ({ cinema, totScreen }) => {
           screen: regForm.screen,
           time: regForm.time,
           ticket: regForm.ticket,
-          date: new Date().toLocaleString() + ""
+          date: regForm.date
         }
       })
       .then((res) => {
@@ -121,11 +131,11 @@ export const Tracing = ({ cinema, totScreen }) => {
 
     let newArrya = [...registrer];
     regForm = { ...regForm, onDb: true, count: counter };
-    console.log("final regform", regForm);
+    /* console.log("final regform", regForm); */
     newArrya[counter] = regForm;
 
     setRegistrer(newArrya);
-    console.log(newArrya);
+    /* console.log(newArrya); */
     if (counter === 2) {
       setCounter(0);
     }
@@ -144,6 +154,35 @@ export const Tracing = ({ cinema, totScreen }) => {
       /* console.log(e.key) */
       buttonSubmit.current.focus();
     }
+  };
+
+  const GiornoShow = () => {
+    if (!anotherDay) {
+      return (
+        <input
+          name="date"
+          className="form-control text-muted"
+          aria-label="Disabled input example"
+          placeholder="date"
+          value={new Date().toLocaleString() + ""}
+          disabled
+        />
+      );
+    } else {
+      return (
+        <input
+          type="date"
+          value={datashow}
+          onChange={onChangeDate}
+          className="form-control "
+          aria-label="Text input with checkbox"
+        />
+      );
+    }
+  };
+
+  const onChangeDate = (e) => {
+    setDataShow(e.target.value);
   };
 
   useEffect(() => {}, []);
@@ -193,6 +232,7 @@ export const Tracing = ({ cinema, totScreen }) => {
               <div className="col-2">
                 <ModalPhoto origin={"ticket"} setInput={ticket} />
               </div>
+
               <div className="col-12">
                 <Accordion
                   setScreen={setScreen}
@@ -203,15 +243,22 @@ export const Tracing = ({ cinema, totScreen }) => {
                 />
               </div>
 
-              <div className="col-12">
-                <input
-                  name="date"
-                  className="form-control"
-                  aria-label="Disabled input example"
-                  placeholder="date"
-                  value={new Date().toLocaleString() + ""}
-                  disabled
-                />
+              <div className="col12">
+                <label htmlFor="input-group">
+                  seleziona la data dello spettacolo nel caso non sia oggi
+                </label>
+                <div className="input-group mb-3">
+                  <div className="input-group-text">
+                    <input
+                      className="form-check-input mt-0"
+                      type="checkbox"
+                      checked={anotherDay}
+                      onChange={() => SetAnotherDay(!anotherDay)}
+                      aria-label="Checkbox for following text input"
+                    />
+                  </div>
+                  <GiornoShow />
+                </div>
               </div>
 
               <div className="col-12 d-flex justify-content-center">
