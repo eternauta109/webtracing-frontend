@@ -96,7 +96,7 @@ export const Tracing = ({ cinema, totScreen }) => {
         registration: {
           cinema: cinema,
           fiscale: regForm.fiscale,
-          nameClient: regForm.name,
+          nameClient: regForm.nome,
           numberPhone: regForm.phone,
           screen: regForm.screen,
           time: regForm.time,
