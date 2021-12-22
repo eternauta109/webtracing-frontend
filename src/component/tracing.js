@@ -56,9 +56,9 @@ export const Tracing = ({ cinema, totScreen }) => {
     //form di registrazione
 
     let regForm = {
-      fiscale: codFisc.current.value,
-      ticket: ticket.current.value,
-      nome: agregato.current.value,
+      fiscale: codFisc.current.value.toUpperCase(),
+      ticket: ticket.current.value.toUpperCase(),
+      nome: agregato.current.value.toUpperCase(),
       phone: number.current.value,
 
       screen,
@@ -67,7 +67,7 @@ export const Tracing = ({ cinema, totScreen }) => {
       onDb: false,
       date: anotherDay ? datashow : moment().format("YYYY-MM-DD")
     };
-    /* console.log(regForm); */
+    console.log(regForm);
 
     //controlli
     if (!regForm.fiscale) {
