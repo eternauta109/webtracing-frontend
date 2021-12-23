@@ -56,9 +56,9 @@ export const Tracing = ({ cinema, totScreen }) => {
     //form di registrazione
 
     let regForm = {
-      fiscale: codFisc.current.value,
-      ticket: ticket.current.value,
-      nome: agregato.current.value,
+      fiscale: codFisc.current.value.toUpperCase(),
+      ticket: ticket.current.value.toUpperCase(),
+      nome: agregato.current.value.toUpperCase(),
       phone: number.current.value,
 
       screen,
@@ -96,7 +96,7 @@ export const Tracing = ({ cinema, totScreen }) => {
         registration: {
           cinema: cinema,
           fiscale: regForm.fiscale,
-          nameClient: regForm.name,
+          nameClient: regForm.nome,
           numberPhone: regForm.phone,
           screen: regForm.screen,
           time: regForm.time,

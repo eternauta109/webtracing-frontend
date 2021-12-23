@@ -5,9 +5,14 @@ export const NavBar = ({ isLogged }) => {
   const Litracing = () => {
     if (isLogged) {
       return (
+        <>
         <li className="nav-item m-2">
           <Link to={`/tracing`}>Tracing </Link>
         </li>
+         <li className="nav-item m-2">
+         <Link to={`/show`}>Show </Link>
+       </li>
+       </>
       );
     } else {
       return <li className="nav-item m-2">loggati</li>;
