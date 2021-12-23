@@ -1,6 +1,7 @@
 import React from "react";
 import "./style.css";
 import Login from "./component/login";
+import Show from './component/show'
 import Tracing from "./component/tracing";
 import Navbar from "./component/navbar";
 import { useState } from "react";
@@ -40,6 +41,10 @@ export default function App() {
             <Route
               path="tracing"
               element={<Tracing cinema={cinema} totScreen={totScreen} />}
+            />
+            <Route
+              path="show"
+              element={<Show />}
             />
             <Route
               path="*"
