@@ -1,19 +1,20 @@
 import React from "react";
 
-export const ElementFound = ({ found }) => {
- 
+export const ElementFound = ({ found, insert }) => {
+  if (!found) {
+    console.log("not found");
+    return;
+  }
 
-    if (!found){
-        console.log('not found')
-        return
-    }
   return (
-    <li className="list-group-item d-flex justify-content-between">
-      <span>
-        cod.fisc: {found.codfisc} nome: {found.agregate} phone: {found.phone}{" "}
-        screen e showtime: {found.screen}/{found.showtime}{" "}
-      </span>
-    </li>
+    <tr>
+      <th scope="row">{found.codfisc.toUpperCase()}</th>
+      <td>{found.ticket ? found.ticket.toUpperCase() : "null"}</td>
+      <td>{found.name ? found.name.toUpperCase() : "null"}</td>
+      <td>{found.phone ? found.phone : "null"}</td>
+      <td>{found.screen ? found.screen : "null"}</td>
+      <td>{found.showtime ? found.showtime : "null"}</td>
+    </tr>
   );
 };
 
