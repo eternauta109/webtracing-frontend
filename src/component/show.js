@@ -39,6 +39,8 @@ export const Show = () => {
     } catch (error) {
       /* console.log(error); */
     }
+    insert.current.value = "";
+    insert.current.focus();
   };
 
   return (
