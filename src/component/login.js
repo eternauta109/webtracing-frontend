@@ -1,12 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
+import path from "../config/url";
 
 export const Login = ({ setCinema, setLogged, setTotScreen }) => {
   const username = useRef("");
   const password = useRef("");
-
-  const URL = "https://webtracing.herokuapp.com/";
+  /* console.log(path); */
+  const URL = path;
 
   const navigate = useNavigate();
 

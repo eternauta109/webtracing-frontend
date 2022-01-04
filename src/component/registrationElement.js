@@ -3,11 +3,11 @@ import { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import path from "../config/url";
 
 function RegistrationElement({ registration, reg, setRegistrer }) {
   const [select, setSelect] = useState("");
-  const URL = "https://webtracing.herokuapp.com/tracing/";
-  /* console.log("registartion", reg); */
+  const URL = path + "/tracing/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();

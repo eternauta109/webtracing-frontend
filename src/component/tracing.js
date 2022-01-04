@@ -6,9 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import ModalPhoto from "./modalPhoto";
 import moment from "moment";
+import path from "../config/url";
 
 export const Tracing = ({ cinema, totScreen }) => {
-  const URL = "https://webtracing.herokuapp.com/tracing";
+  /* console.log(path); */
+  const URL = path + "/tracing";
   /* const [codFisc, setCodFisc] = useState(''); */
   const codFisc = useRef();
   const ticket = useRef();

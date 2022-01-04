@@ -2,10 +2,11 @@ import axios from "axios";
 import React from "react";
 import { useRef, useState } from "react";
 import ListToFind from "./ListToFind";
+import path from "../config/url";
 
 export const Show = () => {
-  const URL = "https://webtracing.herokuapp.com/find";
-  /* const URL2 = "http://localhost:3001/find/"; */
+  const URL = path + "/find";
+
   const insert = useRef();
   const [list, setLsit] = useState([]);
 
