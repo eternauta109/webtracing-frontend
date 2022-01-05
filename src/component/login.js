@@ -2,10 +2,14 @@ import React, { useEffect, useRef } from "react";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import path from "../config/url";
+import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Login = ({ setCinema, setLogged, setTotScreen }) => {
   const username = useRef("");
   const password = useRef("");
+  /* const [dateToDay, setDay] = useState(moment().format("YYYY-MM-DD")); */
   /* console.log(path); */
   const URL = path;
 
@@ -48,7 +52,31 @@ export const Login = ({ setCinema, setLogged, setTotScreen }) => {
     }
   };
 
-  useEffect(() => {});
+  const deleteOldRow = async () => {
+    var olddate = moment().subtract(15, "days").format("YYYY-MM-DD");
+
+    await Axios.delete(URL, {
+      data: { dateToDelete: olddate }
+    })
+      .then((res) => {
+        toast.success(`delete ${res.data.affectedRows} old row`, {
+          position: "bottom-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined
+        });
+      })
+      .catch((e) => alert(`errore sul delete di login ${e}`));
+
+    /* console.log(olddate); */
+  };
+
+  useEffect(() => {
+    deleteOldRow();
+  });
 
   return (
     <div className="container-fluid">
@@ -93,6 +121,17 @@ export const Login = ({ setCinema, setLogged, setTotScreen }) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </div>
   );
 };

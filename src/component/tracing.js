@@ -18,7 +18,7 @@ export const Tracing = ({ cinema, totScreen }) => {
   const [screen, setScreen] = useState();
   const [time, setTime] = useState();
   const [anotherDay, SetAnotherDay] = useState(false);
-  const [datashow, setDataShow] = useState("");
+  const [datashow, setDataShow] = useState(moment().format("YYYY-MM-DD"));
   /* const date = new Date().toLocaleString() + ''; */
   const agregato = useRef();
   const number = useRef();
@@ -49,7 +49,7 @@ export const Tracing = ({ cinema, totScreen }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    /* console.log(datashow); */
+    console.log(datashow);
     if (!cinema) {
       alert("fai prima il login grazie");
       return;
@@ -187,7 +187,7 @@ export const Tracing = ({ cinema, totScreen }) => {
     setDataShow(e.target.value);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {});
 
   return (
     <div className="container-fluid">
