@@ -7,6 +7,8 @@ import axios from "axios";
 import ModalPhoto from "./modalPhoto";
 import moment from "moment";
 import path from "../config/url";
+import Keyboard from "react-simple-keyboard";
+import "react-simple-keyboard/build/css/index.css";
 
 export const Tracing = ({ cinema, totScreen }) => {
   /* console.log(path); */
@@ -24,13 +26,23 @@ export const Tracing = ({ cinema, totScreen }) => {
   const number = useRef();
   const [counter, setCounter] = useState(0);
   const [registrer, setRegistrer] = useState([]);
+  const [inputName, setInputName] = useState("default");
+  const [inputs, setInputs] = useState({});
+  const [layoutName, setLayoutName] = useState("default");
+
+  const keyboard = useRef();
 
   function azzeraTutto() {
     codFisc.current.value = null;
     agregato.current.value = null;
     number.current.value = null;
     ticket.current.value = null;
+    setInputs({ default: "" });
+    keyboard.current.replaceInput({ default: "" });
+    console.log("afte", inputs);
 
+    setInputName("default");
+    keyboard.current.value = "";
     SetAnotherDay(false);
   }
 
@@ -62,10 +74,8 @@ export const Tracing = ({ cinema, totScreen }) => {
       ticket: ticket.current.value.toUpperCase(),
       nome: agregato.current.value.toUpperCase(),
       phone: number.current.value,
-
       screen,
       time,
-
       onDb: false,
       date: anotherDay ? datashow : moment().format("YYYY-MM-DD")
     };
@@ -142,6 +152,7 @@ export const Tracing = ({ cinema, totScreen }) => {
       setCounter(0);
     }
     azzeraTutto();
+    console.log(regForm);
 
     /* codFisc.current.focus(); */
   };
@@ -189,6 +200,44 @@ export const Tracing = ({ cinema, totScreen }) => {
 
   useEffect(() => {});
 
+  const onChangeAll = (inputs) => {
+    /**
+     * Here we spread the inputs into a new object
+     * If we modify the same object, react will not trigger a re-render
+     */
+    setInputs({ ...inputs });
+    console.log("Inputs changed", inputs);
+  };
+
+  const handleShift = () => {
+    const newLayoutName = layoutName === "default" ? "shift" : "default";
+    setLayoutName(newLayoutName);
+  };
+
+  const onKeyPress = (button) => {
+    /* console.log("Button pressed", button); */
+
+    /**
+     * If you want to handle the shift and caps lock buttons
+     */
+    if (button === "{shift}" || button === "{lock}") handleShift();
+  };
+
+  const onChangeInput = (event) => {
+    const inputVal = event.target.value;
+    console.log("input val", inputVal);
+    setInputs({
+      ...inputs,
+      [inputName]: inputVal
+    });
+
+    keyboard.current.setInput(inputVal);
+  };
+
+  const getInputValue = (inputName) => {
+    return inputs[inputName] || "";
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -209,13 +258,19 @@ export const Tracing = ({ cinema, totScreen }) => {
                 <input
                   type="text"
                   ref={codFisc}
+                  value={getInputValue("codFisc")}
+                  id="codFisc"
                   tabIndex="0"
+                  onFocus={() => setInputName("codFisc")}
                   name="codFisc"
+                  autoComplete="off"
                   onKeyPress={handleKeyPressed}
                   className="form-control"
                   placeholder="CODICE FISCALE"
+                  onChange={onChangeInput}
                 />
               </div>
+
               <div className="col-2">
                 <ModalPhoto origin={"codfiscale"} setInput={codFisc} />
               </div>
@@ -224,11 +279,16 @@ export const Tracing = ({ cinema, totScreen }) => {
                 <input
                   type="text"
                   name="ticket"
+                  id="ticket"
+                  onFocus={() => setInputName("ticket")}
                   onKeyPress={handleKeyPressed}
                   tabIndex="0"
                   ref={ticket}
+                  value={getInputValue("ticket")}
+                  autoComplete="off"
                   className="form-control"
                   placeholder="TICKET"
+                  onChange={onChangeInput}
                 />
               </div>
               <div className="col-2">
@@ -238,9 +298,12 @@ export const Tracing = ({ cinema, totScreen }) => {
               <div className="col-12">
                 <Accordion
                   setScreen={setScreen}
+                  setInputName={setInputName}
+                  getInputValue={getInputValue}
                   setTime={setTime}
                   num={number}
                   nome={agregato}
+                  onChangeInput={onChangeInput}
                   totScreen={totScreen}
                 />
               </div>
@@ -274,6 +337,14 @@ export const Tracing = ({ cinema, totScreen }) => {
                 </button>
               </div>
             </form>
+            <hr />
+            <Keyboard
+              keyboardRef={(r) => (keyboard.current = r)}
+              inputName={inputName}
+              layoutName={layoutName}
+              onChangeAll={onChangeAll}
+              onKeyPress={onKeyPress}
+            />
             <hr />
             <Table registration={registrer} setRegistrer={setRegistrer} />
             <hr className="mt-4" />

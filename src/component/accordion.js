@@ -1,7 +1,16 @@
 import React from "react";
 import moment from "moment";
 
-export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
+export const Accordion = ({
+  getInputValue,
+  onChangeInput,
+  setInputName,
+  setScreen,
+  setTime,
+  num,
+  nome,
+  totScreen
+}) => {
   /* console.log(totScreen); */
   const arraySala = Array.from(Array(totScreen).keys());
   moment.locale("it");
@@ -43,17 +52,27 @@ export const Accordion = ({ setScreen, setTime, num, nome, totScreen }) => {
         >
           <input
             type="text"
+            id="name"
             ref={nome}
             name="name"
+            autoComplete="off"
             className="form-control my-2"
             placeholder="NOME E COGNOME"
+            onChange={onChangeInput}
+            onFocus={() => setInputName("name")}
+            value={getInputValue("name")}
           />
           <input
             type="text"
+            id="phoneNumber"
             name="phoneNumber"
             ref={num}
+            autoComplete="off"
             className="form-control my-2"
             placeholder="NUMERO DI TELEFONO"
+            onChange={onChangeInput}
+            onFocus={() => setInputName("phoneNumber")}
+            value={getInputValue("phoneNumber")}
           />
 
           <div className="d-flex flex-row">
