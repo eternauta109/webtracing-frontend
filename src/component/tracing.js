@@ -9,6 +9,7 @@ import moment from "moment";
 import path from "../config/url";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
+import { errorHandle, GiornoShow } from "../helper/helper";
 
 export const Tracing = ({ cinema, totScreen }) => {
   /* console.log(path); */
@@ -39,29 +40,16 @@ export const Tracing = ({ cinema, totScreen }) => {
     ticket.current.value = null;
     setInputs({ default: "" });
     keyboard.current.replaceInput({ default: "" });
-    console.log("afte", inputs);
 
     setInputName("default");
     keyboard.current.value = "";
     SetAnotherDay(false);
   }
 
-  const errorHandle = (msg) => {
-    return toast.error(msg, {
-      position: "bottom-right",
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined
-    });
-  };
-
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(datashow);
+    /* console.log(datashow); */
     if (!cinema) {
       alert("fai prima il login grazie");
       return;
@@ -79,7 +67,7 @@ export const Tracing = ({ cinema, totScreen }) => {
       onDb: false,
       date: anotherDay ? datashow : moment().format("YYYY-MM-DD")
     };
-    console.log(regForm);
+    /* console.log(regForm); */
 
     //controlli
     if (!regForm.fiscale) {
@@ -138,14 +126,11 @@ export const Tracing = ({ cinema, totScreen }) => {
       });
 
     setCounter(counter + 1);
-
     /* console.log(counter) */
-
     let newArrya = [...registrer];
     regForm = { ...regForm, onDb: true, count: counter };
     /* console.log("final regform", regForm); */
     newArrya[counter] = regForm;
-
     setRegistrer(newArrya);
     /* console.log(newArrya); */
     if (counter === 2) {
@@ -153,7 +138,6 @@ export const Tracing = ({ cinema, totScreen }) => {
     }
     azzeraTutto();
     console.log(regForm);
-
     /* codFisc.current.focus(); */
   };
 
@@ -169,44 +153,20 @@ export const Tracing = ({ cinema, totScreen }) => {
     }
   };
 
-  const GiornoShow = () => {
-    if (!anotherDay) {
-      return (
-        <input
-          name="date"
-          className="form-control text-muted"
-          aria-label="Disabled input example"
-          placeholder="date"
-          value={new Date().toLocaleString() + ""}
-          disabled
-        />
-      );
-    } else {
-      return (
-        <input
-          type="date"
-          value={datashow}
-          onChange={onChangeDate}
-          className="form-control "
-          aria-label="Text input with checkbox"
-        />
-      );
-    }
-  };
-
   const onChangeDate = (e) => {
     setDataShow(e.target.value);
   };
 
   useEffect(() => {});
 
+  //Funzioni per gestione tastiera virtuale
   const onChangeAll = (inputs) => {
     /**
      * Here we spread the inputs into a new object
      * If we modify the same object, react will not trigger a re-render
      */
     setInputs({ ...inputs });
-    console.log("Inputs changed", inputs);
+    /* console.log("Inputs changed", inputs); */
   };
 
   const handleShift = () => {
@@ -225,7 +185,7 @@ export const Tracing = ({ cinema, totScreen }) => {
 
   const onChangeInput = (event) => {
     const inputVal = event.target.value;
-    console.log("input val", inputVal);
+    /* console.log("input val", inputVal); */
     setInputs({
       ...inputs,
       [inputName]: inputVal
@@ -322,7 +282,11 @@ export const Tracing = ({ cinema, totScreen }) => {
                       aria-label="Checkbox for following text input"
                     />
                   </div>
-                  <GiornoShow />
+                  <GiornoShow
+                    anotherDay={anotherDay}
+                    datashow={datashow}
+                    onChangeDate={onChangeDate}
+                  />
                 </div>
               </div>
 
@@ -338,21 +302,22 @@ export const Tracing = ({ cinema, totScreen }) => {
               </div>
             </form>
             <hr />
-            <Keyboard
-              keyboardRef={(r) => (keyboard.current = r)}
-              inputName={inputName}
-              layoutName={layoutName}
-              onChangeAll={onChangeAll}
-              onKeyPress={onKeyPress}
-            />
-            <hr />
-            <Table registration={registrer} setRegistrer={setRegistrer} />
-            <hr className="mt-4" />
-            <div className="col-12">
-              <p className="text-center mb-0">dev by Fabio Conti</p>
-            </div>
           </div>
+          <Keyboard
+            keyboardRef={(r) => (keyboard.current = r)}
+            inputName={inputName}
+            layoutName={layoutName}
+            onChangeAll={onChangeAll}
+            onKeyPress={onKeyPress}
+          />
+          <hr />
         </div>
+      </div>
+
+      <Table registration={registrer} setRegistrer={setRegistrer} />
+      <hr className="mt-4" />
+      <div className="col-12">
+        <p className="text-center mb-0">dev by Fabio Conti</p>
       </div>
       <ToastContainer
         position="bottom-right"
