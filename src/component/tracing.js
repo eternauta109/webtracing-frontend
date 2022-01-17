@@ -236,7 +236,6 @@ export const Tracing = ({ cinema, totScreen }) => {
 
   const onChangeInput = (event) => {
     const inputVal = event.target.value;
-
     /* console.log("input val", inputVal);
       console.log("input name", inputName); */
     setInputs({

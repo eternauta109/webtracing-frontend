@@ -82,8 +82,8 @@ export const Accordion = ({
             value={getInputValue("phoneNumber")}
           />
 
-          <div className="d-flex flex-row">
-            <div className="col-4 m-1">
+          <div className="d-flex justify-content-between ">
+            <div className="col-4 ">
               <label className="text-muted" htmlFor="form-select">
                 SALA
               </label>
@@ -98,7 +98,7 @@ export const Accordion = ({
                 })}
               </select>
             </div>
-            <div className="col-7 m-1">
+            <div className="col-6 ">
               <label className="text-muted" htmlFor="form-select">
                 ORARIO
               </label>
