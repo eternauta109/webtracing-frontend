@@ -2,6 +2,7 @@ import React from "react";
 import moment from "moment";
 
 export const Accordion = ({
+  setLayoutName,
   getInputValue,
   onChangeInput,
   setInputName,
@@ -59,7 +60,10 @@ export const Accordion = ({
             className="form-control my-2"
             placeholder="NOME E COGNOME"
             onChange={onChangeInput}
-            onFocus={() => setInputName("name")}
+            onFocus={() => {
+              setInputName("name");
+              setLayoutName("default");
+            }}
             value={getInputValue("name")}
           />
           <input
@@ -71,7 +75,10 @@ export const Accordion = ({
             className="form-control my-2"
             placeholder="NUMERO DI TELEFONO"
             onChange={onChangeInput}
-            onFocus={() => setInputName("phoneNumber")}
+            onFocus={() => {
+              setInputName("phoneNumber");
+              setLayoutName("numbers");
+            }}
             value={getInputValue("phoneNumber")}
           />
 

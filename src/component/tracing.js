@@ -10,6 +10,48 @@ import path from "../config/url";
 import Keyboard from "react-simple-keyboard";
 import "react-simple-keyboard/build/css/index.css";
 import { errorHandle, GiornoShow } from "../helper/helper";
+import "./key.css";
+
+/* import KeyApp from "./Keyboard"; */
+
+const layout = {
+  default: [
+    "q w e r t y u i o p",
+    "a s d f g h j k l",
+    "{shift} z x c v b n m {backspace}",
+    "{numbers} {space} {ent}"
+  ],
+  shift: [
+    "Q W E R T Y U I O P",
+    "A S D F G H J K L",
+    "{shift} Z X C V B N M {backspace}",
+    "{numbers} {space} {ent}"
+  ],
+  numbers: ["1 2 3", "4 5 6", "7 8 9", "{abc} 0 {backspace}"]
+};
+
+const display = {
+  "{numbers}": "123",
+  "{ent}": "return",
+  "{escape}": "esc ⎋",
+  "{tab}": "tab ⇥",
+  "{backspace}": "⌫",
+  "{capslock}": "caps lock ⇪",
+  "{shift}": "⇧",
+  "{controlleft}": "ctrl ⌃",
+  "{controlright}": "ctrl ⌃",
+  "{altleft}": "alt ⌥",
+  "{altright}": "alt ⌥",
+  "{metaleft}": "cmd ⌘",
+  "{metaright}": "cmd ⌘",
+  "{abc}": "ABC",
+  "{space}": " "
+};
+
+const style = {
+  color: "black",
+  fontSize: 200
+};
 
 export const Tracing = ({ cinema, totScreen }) => {
   /* console.log(path); */
@@ -165,32 +207,42 @@ export const Tracing = ({ cinema, totScreen }) => {
      * Here we spread the inputs into a new object
      * If we modify the same object, react will not trigger a re-render
      */
+    /* console.log("Inputs changed", inputs[inputName]); */
     setInputs({ ...inputs });
-    /* console.log("Inputs changed", inputs); */
+    /*  console.log("Inputs changed", inputs[inputName]);
+    console.log("input val", keyboard.current); */
   };
 
   const handleShift = () => {
     const newLayoutName = layoutName === "default" ? "shift" : "default";
     setLayoutName(newLayoutName);
+    console.log(layoutName);
+  };
+
+  const handleNumbers = () => {
+    const newLayoutName = layoutName === "default" ? "numbers" : "default";
+    setLayoutName(newLayoutName);
+    console.log(layoutName);
   };
 
   const onKeyPress = (button) => {
-    /* console.log("Button pressed", button); */
-
+    console.log("Button pressed", button);
     /**
      * If you want to handle the shift and caps lock buttons
      */
-    if (button === "{shift}" || button === "{lock}") handleShift();
+    if (button === "{shift}") handleShift();
+    if (button === "{numbers}" || button === "{abc}") handleNumbers();
   };
 
   const onChangeInput = (event) => {
     const inputVal = event.target.value;
-    /* console.log("input val", inputVal); */
+
+    /* console.log("input val", inputVal);
+      console.log("input name", inputName); */
     setInputs({
       ...inputs,
       [inputName]: inputVal
     });
-
     keyboard.current.setInput(inputVal);
   };
 
@@ -257,6 +309,7 @@ export const Tracing = ({ cinema, totScreen }) => {
 
               <div className="col-12">
                 <Accordion
+                  setLayoutName={setLayoutName}
                   setScreen={setScreen}
                   setInputName={setInputName}
                   getInputValue={getInputValue}
@@ -301,14 +354,18 @@ export const Tracing = ({ cinema, totScreen }) => {
                 </button>
               </div>
             </form>
+
             <hr />
           </div>
           <Keyboard
+            style={style}
             keyboardRef={(r) => (keyboard.current = r)}
             inputName={inputName}
             layoutName={layoutName}
             onChangeAll={onChangeAll}
             onKeyPress={onKeyPress}
+            layout={layout}
+            display={display}
           />
           <hr />
         </div>

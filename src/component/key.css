@@ -1,0 +1,30 @@
+.simple-keyboard {
+  max-width: none;
+  margin: 0 auto;
+}
+
+.simple-keyboard .hg-button.hg-functionBtn.hg-button-space {
+  min-width: 150px;
+  max-width: none;
+}
+
+.simple-keyboard.hg-theme-default .hg-button[data-skbtnuid^="numbers-"] {
+  width: 63%;
+  max-width: none;
+}
+
+.simple-keyboard .hg-button {
+  max-width: none;
+  max-height: 100px;
+  min-width: 20px;
+  min-height: 60px;
+  margin: 0 auto;
+}
+
+.simple-keyboard .hg-button-numbers {
+  max-width: 80px;
+}
+
+.simple-keyboard .hg-button.hg-functionBtn.hg-button-ent {
+  max-width: 80px;
+}
