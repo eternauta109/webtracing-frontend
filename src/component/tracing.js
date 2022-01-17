@@ -216,17 +216,17 @@ export const Tracing = ({ cinema, totScreen }) => {
   const handleShift = () => {
     const newLayoutName = layoutName === "default" ? "shift" : "default";
     setLayoutName(newLayoutName);
-    console.log(layoutName);
+    /* console.log(layoutName); */
   };
 
   const handleNumbers = () => {
     const newLayoutName = layoutName === "default" ? "numbers" : "default";
     setLayoutName(newLayoutName);
-    console.log(layoutName);
+    /* console.log(layoutName); */
   };
 
   const onKeyPress = (button) => {
-    console.log("Button pressed", button);
+    /* console.log("Button pressed", button); */
     /**
      * If you want to handle the shift and caps lock buttons
      */
@@ -256,7 +256,7 @@ export const Tracing = ({ cinema, totScreen }) => {
           <div className="login-form bg-light mt-4 p-4">
             <form className="row g-3">
               <h4>Tracing</h4>
-              <div className="col-12">
+              <div className="d-flex justify-content-between">
                 <input
                   className="form-control"
                   type="text"
@@ -265,45 +265,49 @@ export const Tracing = ({ cinema, totScreen }) => {
                   disabled
                 />
               </div>
-              <div className="col-10">
-                <input
-                  type="text"
-                  ref={codFisc}
-                  value={getInputValue("codFisc")}
-                  id="codFisc"
-                  tabIndex="0"
-                  onFocus={() => setInputName("codFisc")}
-                  name="codFisc"
-                  autoComplete="off"
-                  onKeyPress={handleKeyPressed}
-                  className="form-control"
-                  placeholder="CODICE FISCALE"
-                  onChange={onChangeInput}
-                />
-              </div>
 
-              <div className="col-2">
-                <ModalPhoto origin={"codfiscale"} setInput={codFisc} />
-              </div>
+              <div className="d-flex justify-content-between">
+                <div className="col-9">
+                  <input
+                    type="text"
+                    ref={codFisc}
+                    value={getInputValue("codFisc")}
+                    id="codFisc"
+                    tabIndex="0"
+                    onFocus={() => setInputName("codFisc")}
+                    name="codFisc"
+                    autoComplete="off"
+                    onKeyPress={handleKeyPressed}
+                    className="form-control"
+                    placeholder="CODICE FISCALE"
+                    onChange={onChangeInput}
+                  />
+                </div>
 
-              <div className="col-10">
-                <input
-                  type="text"
-                  name="ticket"
-                  id="ticket"
-                  onFocus={() => setInputName("ticket")}
-                  onKeyPress={handleKeyPressed}
-                  tabIndex="0"
-                  ref={ticket}
-                  value={getInputValue("ticket")}
-                  autoComplete="off"
-                  className="form-control"
-                  placeholder="TICKET"
-                  onChange={onChangeInput}
-                />
+                <div>
+                  <ModalPhoto origin={"codfiscale"} setInput={codFisc} />
+                </div>
               </div>
-              <div className="col-2">
-                <ModalPhoto origin={"ticket"} setInput={ticket} />
+              <div className="d-flex justify-content-between">
+                <div className="col-9">
+                  <input
+                    type="text"
+                    name="ticket"
+                    id="ticket"
+                    onFocus={() => setInputName("ticket")}
+                    onKeyPress={handleKeyPressed}
+                    tabIndex="0"
+                    ref={ticket}
+                    value={getInputValue("ticket")}
+                    autoComplete="off"
+                    className="form-control"
+                    placeholder="TICKET"
+                    onChange={onChangeInput}
+                  />
+                </div>
+                <div>
+                  <ModalPhoto origin={"ticket"} setInput={ticket} />
+                </div>
               </div>
 
               <div className="col-12">
