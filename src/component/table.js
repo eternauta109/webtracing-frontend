@@ -1,16 +1,19 @@
-import React from 'react';
-import RegistrationElement from './registrationElement';
+import React from "react";
+import RegistrationElement from "./registrationElement";
 
-
-
-export const Table = ({ registration,setRegistrer}) => {
+export const Table = ({ registration, setRegistrer }) => {
   /* import { useSelector } from "react-redux"; */
- 
+
   /* console.log(registration) */
   return (
-    <ul className="list-group list-group-flush">
+    <ul className="list-group list-group-flush mt-4">
       {registration.map((reg, key) => (
-        <RegistrationElement key={key} registration={registration} reg={reg}  setRegistrer={setRegistrer}  />
+        <RegistrationElement
+          key={key}
+          registration={registration}
+          reg={reg}
+          setRegistrer={setRegistrer}
+        />
       ))}
     </ul>
   );

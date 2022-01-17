@@ -66,7 +66,7 @@ function RegistrationElement({ registration, reg, setRegistrer }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <li className="list-group-item d-flex justify-content-between">
+        <li className="list-group-item d-flex justify-content-between mt-1">
           {deleted}
 
           <button

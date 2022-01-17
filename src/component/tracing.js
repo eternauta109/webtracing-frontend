@@ -369,26 +369,25 @@ export const Tracing = ({ cinema, totScreen }) => {
               layout={layout}
               display={display}
             />
+            <Table registration={registrer} setRegistrer={setRegistrer} />
+            <hr className="mt-4" />
+            <div className="col-12">
+              <p className="text-center mb-0">dev by Fabio Conti</p>
+            </div>
+            <ToastContainer
+              position="bottom-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
           </div>
         </div>
       </div>
-
-      <Table registration={registrer} setRegistrer={setRegistrer} />
-      <hr className="mt-4" />
-      <div className="col-12">
-        <p className="text-center mb-0">dev by Fabio Conti</p>
-      </div>
-      <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
     </div>
   );
 };
