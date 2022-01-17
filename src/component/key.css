@@ -1,16 +1,6 @@
 .simple-keyboard {
-  max-width: none;
+  max-width: 1000px;
   margin: 0 auto;
-}
-
-.simple-keyboard .hg-button.hg-functionBtn.hg-button-space {
-  min-width: 150px;
-  max-width: none;
-}
-
-.simple-keyboard.hg-theme-default .hg-button[data-skbtnuid^="numbers-"] {
-  width: 63%;
-  max-width: none;
 }
 
 .simple-keyboard .hg-button {
