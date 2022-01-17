@@ -359,18 +359,17 @@ export const Tracing = ({ cinema, totScreen }) => {
             </form>
 
             <hr />
+            <Keyboard
+              style={style}
+              keyboardRef={(r) => (keyboard.current = r)}
+              inputName={inputName}
+              layoutName={layoutName}
+              onChangeAll={onChangeAll}
+              onKeyPress={onKeyPress}
+              layout={layout}
+              display={display}
+            />
           </div>
-          <Keyboard
-            style={style}
-            keyboardRef={(r) => (keyboard.current = r)}
-            inputName={inputName}
-            layoutName={layoutName}
-            onChangeAll={onChangeAll}
-            onKeyPress={onKeyPress}
-            layout={layout}
-            display={display}
-          />
-          <hr />
         </div>
       </div>
 
